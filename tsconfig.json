@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "moduleResolution": "node",
+        "module": "ESNext",
+        "target": "es2016",
+        "strict": true,
+        "declaration": true,
+        "outDir": "./dist",
+        "allowSyntheticDefaultImports": true,
+        "lib": [
+            "es2015",
+            "dom"
+        ]
+    },
+    "include": [
+        "src/**/*"
+    ]
+}
