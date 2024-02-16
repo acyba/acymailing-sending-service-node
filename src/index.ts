@@ -1,5 +1,5 @@
 import {Info} from "./types/info";
-import {Domain} from "./types/domain";
+import {Domain, DomainIdentity} from "./types/domain";
 import {ApiResponse, ApiResponseDomain} from "./types/apiResponse";
 import {ApiService} from "./services/api.js";
 import {Email, MimeAttachment} from "./types/email";
@@ -21,7 +21,7 @@ export class AcyMailer {
         return domainRegex.test(domainName);
     }
 
-    public getCredits = async (): Promise<Info> => {
+    public getLicenseInfo = async (): Promise<Info> => {
         return this.apiService.request('/api/get_credits');
     }
 
@@ -58,7 +58,7 @@ export class AcyMailer {
             siteUrl: domain.siteUrl ? domain.siteUrl : `https://${domain.name}`
         }
 
-        this.apiService.request('/api/deleteDomainIdentity', 'DELETE', domainToDelete);
+        await this.apiService.request('/api/deleteDomainIdentity', 'DELETE', domainToDelete);
 
         return {
             message: 'Domain deleted successfully'
@@ -143,5 +143,26 @@ export class AcyMailer {
                 data: fs.readFileSync(attachment, {encoding: 'base64'})
             }
         })
+    }
+
+    public updateDomain = async (domain: DomainIdentity) => {
+        if (!domain.id) {
+            throw new Error('Domain id is required');
+        }
+
+        if (domain.isLimited === undefined && domain.creditsAllowed === undefined) {
+            throw new Error('isLimited or creditsAllowed is required to update domain');
+        }
+
+        const domainToUpdate = {
+            isLimited: domain.isLimited,
+            creditsAllowed: domain.creditsAllowed
+        };
+
+        await this.apiService.request(`/api/domains/${domain.id}`, 'PATCH', domainToUpdate);
+
+        return {
+            message: 'Domain updated successfully'
+        }
     }
 }
