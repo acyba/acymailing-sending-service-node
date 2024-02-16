@@ -9,7 +9,7 @@
     ],
     "scripts": {
         "test": "rm -rf ./dist && tsc && node index.js",
-        "build": "rm -rf ./dist && tsc && node dist/test.js",
+        "build": "rm -rf ./dist && tsc",
         "pack": "rm -rf acymailing-sending-service-1.0.0.tgz && rm -rf ./dist && npm run build && npm pack"
     },
     "author": "acymailing",
@@ -18,5 +18,8 @@
     "dependencies": {
         "mime": "^4.0.1",
         "mimetext": "^3.0.16"
+    },
+    "devDependencies": {
+        "typescript": "^5.3.3"
     }
 }

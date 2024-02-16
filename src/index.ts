@@ -142,7 +142,6 @@ export class AcyMailer {
                 contentType: mime.getType(attachment),
                 data: fs.readFileSync(attachment, {encoding: 'base64'})
             }
-            console.log(mime.getType(attachment));
         })
     }
 }
