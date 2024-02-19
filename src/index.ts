@@ -124,11 +124,7 @@ export class AcyMailer {
             return email[key].split('@')[1];
         });
 
-        const domainsUnique = Array.from(new Set(domains));
-
-        return domainsUnique.map((domain: string) => {
-            return domain.split('.').slice(-2).join('.');
-        });
+        return Array.from(new Set(domains));
     }
 
     private getAttachments = (email: Email): MimeAttachment[] => {
